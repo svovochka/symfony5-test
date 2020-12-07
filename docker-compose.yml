@@ -20,14 +20,11 @@ services:
 
   php:
     container_name: symfony5_php
-    image: php:7.4-fpm
+    build:
+      context: .
+      dockerfile: ./env/php/Dockerfile
     environment:
-      DB_CONNECTION: pgsql
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_DATABASE: symfony5
-      DB_USERNAME: symfony5
-      DB_PASSWORD: symfony5
+      DATABASE_URL: "postgresql://symfony5:symfony5@postgres:5432/symfony5?serverVersion=13&charset=utf8"
     volumes:
       - "./app/:/var/www/html"
       - "./env/php/conf/php.ini:/usr/local/etc/php/php.ini"
