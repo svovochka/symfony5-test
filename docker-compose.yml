@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+
+  nginx:
+    container_name: symfony5_nginx
+    image: nginx:1.19
+    ports:
+      - "81:80"
+      - "444:443"
+    volumes:
+      - "./app/public/:/var/www/html/public"
+      - "./env/nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "./env/nginx/conf/vhosts.conf:/etc/nginx/conf.d/default.conf"
+      - "./env/nginx/log:/var/log/nginx"
+    links:
+      - php
+    depends_on:
+      - php
+
+  php:
+    container_name: symfony5_php
+    image: php:7.4-fpm
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: symfony5
+      DB_USERNAME: symfony5
+      DB_PASSWORD: symfony5
+    volumes:
+      - "./app/:/var/www/html"
+      - "./env/php/conf/php.ini:/usr/local/etc/php/php.ini"
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: symfony5_postgres
+    image: postgres:13.1
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: symfony5
+      POSTGRES_USER: symfony5
+      POSTGRES_PASSWORD: symfony5
+    volumes:
+      - "./env/postgres/data:/var/lib/postgresql/data"
