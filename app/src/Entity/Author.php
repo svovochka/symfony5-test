@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Entity;
 
 use App\Repository\AuthorRepository;
@@ -10,7 +12,11 @@ use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
 /**
+ * Class Author
+ * @package App\Entity
  * @ORM\Entity(repositoryClass=AuthorRepository::class)
+ *
+ * @method AuthorTranslation|null translate(string $locale = null, bool $fallbackToDefault = true)
  */
 class Author implements TranslatableInterface
 {
@@ -28,11 +34,17 @@ class Author implements TranslatableInterface
      */
     private $books;
 
+    /**
+     * Author constructor.
+     */
     public function __construct()
     {
         $this->books = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +58,11 @@ class Author implements TranslatableInterface
         return $this->books;
     }
 
+    /**
+     * @param Book $book
+     *
+     * @return $this
+     */
     public function addBook(Book $book): self
     {
         if (!$this->books->contains($book)) {
@@ -56,6 +73,11 @@ class Author implements TranslatableInterface
         return $this;
     }
 
+    /**
+     * @param Book $book
+     *
+     * @return Author
+     */
     public function removeBook(Book $book): self
     {
         if ($this->books->removeElement($book)) {

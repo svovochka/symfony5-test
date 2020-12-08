@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Entity;
 
 use App\Repository\BookTranslationRepository;
@@ -8,6 +10,8 @@ use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 
 /**
+ * Class BookTranslation
+ * @package App\Entity
  * @ORM\Entity(repositoryClass=BookTranslationRepository::class)
  */
 class BookTranslation implements TranslationInterface
@@ -26,16 +30,27 @@ class BookTranslation implements TranslationInterface
      */
     private $title;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     *
+     * @return BookTranslation
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
