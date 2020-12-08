@@ -14,7 +14,7 @@ final class Version20201207144253 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return 'DDL Create initial schema';
     }
 
     public function up(Schema $schema) : void
