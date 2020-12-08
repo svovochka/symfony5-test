@@ -11,6 +11,8 @@ services:
       - |
         composer install --no-interaction --ignore-platform-reqs --no-scripts
         chmod -R 777 /app/vendor
+        mkdir /app/var
+        chmod -R 777 /app/var
         echo 'Dependencies successfully installed'
     tty: true
     volumes:

@@ -44,6 +44,6 @@ class AuthorController extends AbstractController
         $author->mergeNewTranslations();
         $em->flush();
 
-        return new JsonResponse(AuthorMapper::mapToArray($author, 'ru'));
+        return new JsonResponse(AuthorMapper::mapToArray($author));
     }
 }
